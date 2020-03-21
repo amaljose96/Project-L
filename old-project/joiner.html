@@ -1,0 +1,52 @@
+<html>
+<head>
+
+</head>
+<body>
+  <script src="jq.js"></script>
+  <script>
+    function Joiner(){
+
+        $.ajax({
+            type: "POST",
+            url: "join.php",
+            data: new FormData(document.getElementById('join_form')),
+            cache: false,
+            processData:false,
+            contentType:false,
+            success: function(result){
+              if(result=="1"){
+                $("#erroralert").html("Duplicate user");
+              }
+              else if(result=="2"){
+                $("#erroralert").html("Passwords dont match");
+              }
+              else if(result=='Success'){
+                $("#erroralert").html("Account succesfully made. Login.");
+                setTimeout(function(){window.location.href='index.html';},2000);
+              }
+              else{
+                $("#erroralert").html(result);
+              }
+            }
+          });
+    }
+  </script>
+  <div id="join_us_title">Join Us</div>
+  <form id='join_form'>
+    <div id="email_label">Email</div>
+    <input id="email_box" name='email' type='email'/>
+    <div id="firstname_label">First Name</div>
+    <input id="firstname_box" name='firstname' type='text'/>
+    <div id="lastname_label">Last Name</div>
+    <input id="lastname_box" name='lastname' type='text'/>
+    <div id="password_label">Password</div>
+    <input id="password_box" name='password' type='password'/>
+    <div id="confpassword_label">Confirm Password</div>
+    <input id="confpassword_box" name='confpassword' type='password'/>
+    <div id="sign_in" onclick="Joiner()">Join</div>
+  </form>
+  <div id="erroralert"></div>
+  <div id="join_comment">Already a member? Log in <a href="index.html">here</a></div>
+</body>
+</html>
